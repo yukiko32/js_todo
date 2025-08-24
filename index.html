@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo List</title>
+</head>
+<body>
+  <!-- Todoアイテム数の表示 -->
+  <header>
+    <span id="js-todo-count">全てのタスク: 0</span>
+    <span id="js-completed-count">完了済み: 0</span>
+    <span id="js-incompleted-count">未完了: 0</span>
+  </header>
+
+  <form id="js-form">
+    <input
+      id="js-form-input"
+      type="text"
+      placeholder="タスクを追加"
+      autocomplete="off"
+    />
+    <input type="submit" value="保存">
+  </form>
+  <!-- TodoアプリのメインとなるTodoリスト -->
+  <div id="js-todo-list"><!-- Todoリストの表示 --></div>
+  <script src="./index.js" type="module"></script>
+</body>
+</html>
