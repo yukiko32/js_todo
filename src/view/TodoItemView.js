@@ -6,9 +6,12 @@ export class TodoItemView {
    * @param {TodoItemModel} todoItem
    * @param {function({id:number, completed: boolean})} onUpdateTodo チェックボックスの更新イベントリスナー
    * @param {function({id:number})} onDeleteTodo 削除ボタンのクリックイベントリスナー
+   * @param {function({id:number})} onStartEdit 編集ボタンのクリックイベントリスナー
+   * @param {function({id:number, title: string})} onUpdateTitle 保存ボタンの更新イベントリスナー
+   * @param {number} editingId 編集中のTodoItemのid
    * @returns {Element}
    */
-  createElement(todoItem, { onUpdateTodo, onDeleteTodo, onEditTodo, onStartEdit }, editingId) {
+  createElement(todoItem, { onUpdateTodo, onDeleteTodo, onStartEdit, onUpdateTitle }, editingId) {
     // 状態により編集中・完了済み・未完了のTodoアイテムを作成
     let todoItemElement = null;
     if (todoItem.id === editingId) {
@@ -31,9 +34,7 @@ export class TodoItemView {
     }
 
     // Todoアイテムの完了フラグの変更
-    // querySelector(".クラス名")でそのクラス名を持つ要素を取得する（今回は上で作成したチェックボックス(input要素)）
     const inputCheckboxElement = todoItemElement.querySelector(".checkbox");
-    // 「addEventListener("change", ...)」で、コントロールの値が変化した後に発火する
     if (inputCheckboxElement) {
       inputCheckboxElement.addEventListener("change", () => {
         onUpdateTodo({
@@ -55,7 +56,7 @@ export class TodoItemView {
       });
     }
 
-    // Todoアイテムのタイトルを編集
+    // Todoアイテムのタイトルを編集中にする
     const editButtonElement = todoItemElement.querySelector(".edit-btn");
     if (editButtonElement) {
       editButtonElement.addEventListener("click", () => {
@@ -71,7 +72,7 @@ export class TodoItemView {
       saveButtonElement.addEventListener("click", () => {
         const editElement = todoItemElement.querySelector(".edit");
         const newTitle = editElement.value;
-        onEditTodo({
+        onUpdateTitle({
           id: todoItem.id,
           title: newTitle
         });

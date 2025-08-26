@@ -7,8 +7,6 @@ export class EventEmitter {
    * @param {Function} listener イベントリスナー
    */
   addEventListener(type, listener) {
-    // 指定したイベントに対応するSetを作成しリスナー関数を登録する
-    // 新規のイベント名は[イベント名, 空のSet]の配列をMapに追加する
     if (!this.#listeners.has(type)) {
       this.#listeners.set(type, new Set());
     }
@@ -23,7 +21,6 @@ export class EventEmitter {
   emit(type) {
     // 指定したイベントに対応するSetを取り出し、すべてのリスナー関数を呼び出す
     const listenerSet = this.#listeners.get(type);
-    // Setがなければ終了
     if (!listenerSet) {
       return;
     }
@@ -41,7 +38,6 @@ export class EventEmitter {
    * @param {Function} listener イベントリスナー
    */
   removeEventListener(type, listener) {
-    // 指定したイベントに対応するSetを取り出し、該当するリスナー関数を削除する
     const listenerSet = this.#listeners.get(type);
     if (!listenerSet) {
       return;

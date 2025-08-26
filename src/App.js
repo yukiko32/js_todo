@@ -21,7 +21,6 @@ export class App {
    * @param {{ id:number, completed: boolean }}
    */
   handleUpdate({ id, completed }) {
-    // 指定したidのTodoItemのcompletedを更新する
     this.#todoListModel.updateTodo({ id, completed });
   }
 
@@ -30,18 +29,24 @@ export class App {
    * @param {{ id: number }}
    */
   handleDelete({ id }) {
-    // 指定したidのTodoItemを削除する
     this.#todoListModel.deleteTodo({ id });
   }
 
-  handleEdite({ id, title }) {
-    this.#todoListModel.editTodo({ id, title });
-  }
-
+  /**
+   * Todoを編集中にするときに呼ばれるリスナー関数
+   * @param {{ id: number }}
+   */
   handleStartEdit({ id }) {
     this.#todoListModel.startEdit({ id });
   }
 
+  /**
+   * Todoのタイトル（内容）を更新するときに呼ばれるリスナー関数
+   * @param {{ id: number }}
+   */
+  handleUpdateTitle({ id, title }) {
+    this.#todoListModel.updateTitle({ id, title });
+  }
 
   mount() {
     // 一致するidのDOM要素を取得する
@@ -54,9 +59,8 @@ export class App {
 
     // TodoListの状態が更新されたときに呼び出されるリスナー関数を登録する（emitChange()で呼ばれる）
     this.#todoListModel.onChange(() => {
-      // #TodoListModelの#items配列を取得
-      const todoItems = this.#todoListModel.getTodoItems();
-      const editingId = this.#todoListModel.getEditingId();
+      const todoItems = this.#todoListModel.getTodoItems();  // #TodoListModelの#items配列
+      const editingId = this.#todoListModel.getEditingId();  // 編集中のTodoItemのid
       const todoListElement = this.#todoListView.createElement(todoItems, {
         onUpdateTodo: ({ id, completed }) => {
           this.handleUpdate({ id, completed });
@@ -64,11 +68,11 @@ export class App {
         onDeleteTodo: ({ id }) => {
           this.handleDelete({ id });
         },
-        onEditTodo: ({ id, title }) => {
-          this.handleEdite({ id, title });
-        },
         onStartEdit: ({ id }) => {
           this.handleStartEdit({ id });
+        },
+        onUpdateTitle: ({ id, title }) => {
+          this.handleUpdateTitle({ id, title });
         }
       }, editingId);
       // 新しいTodoリストで既存のTodoリストを上書きする

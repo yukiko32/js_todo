@@ -1,3 +1,8 @@
+/**
+ * 特定の記号を安全な表現に置換する（HTMLのエスケープ）
+ * @param {string} str 置換する文字列
+ * @return {string}
+ */
 export function escapeSpecialChars(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -7,6 +12,10 @@ export function escapeSpecialChars(str) {
     .replace(/'/g, "&#039;");
 }
 
+/**
+ * HTML文字列からHTML要素を作成して返す
+ * @param {string} html 
+ */
 export function htmlToElement(html) {
   const template = document.createElement("template");  // template.innerHTML に書いたものは表示されずに保持される
   template.innerHTML = html;  // 文字列が「DOMノード」に変換されて、template.content に格納される

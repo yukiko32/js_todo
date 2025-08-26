@@ -3,7 +3,7 @@ import { EventEmitter } from "../EventEmitter.js";
 // EventEmitterクラスを継承したTodoListModelクラスを作成
 export class TodoListModel extends EventEmitter {
   #items;
-  #editingId = null;
+  #editingId = null;  // 編集中のidを保持する
 
   /**
    * @param {TodoItemModel[]} [items] 初期アイテム一覧（デフォルトは空の配列）
@@ -104,25 +104,36 @@ export class TodoListModel extends EventEmitter {
     this.emitChange();
   }
 
+  /**
+   * 編集中のTodoItemのidを返す
+   * @returns { number }
+   */
   getEditingId() {
     return this.#editingId;
   }
 
-  editTodo({ id, title }) {
-    const todoItem = this.#items.find(todo => todo.id === id);
-    if (!todoItem) {
-      return;
-    }
-    todoItem.title = title;  // タイトルを更新する
-    this.#editingId = null;
-    this.emitChange();
-  }
-
+  /**
+   * 指定したidのTodoItemを編集状態にする
+   * @param {{ id:number }}
+   */
   startEdit({ id }) {
     this.#editingId = id;
     this.emitChange();
   }
 
+  /**
+   * 指定したidのTodoItemのtitleを更新する
+   * @param {{ id:number, title:String }}
+   */
+  updateTitle({ id, title }) {
+    const todoItem = this.#items.find(todo => todo.id === id);
+    if (!todoItem) {
+      return;
+    }
+    todoItem.title = title;  // タイトルを更新する
+    this.#editingId = null;  // 編集状態を解除
+    this.emitChange();
+  }
 }
 
 
