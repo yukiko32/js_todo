@@ -38,6 +38,10 @@ export class App {
     this.#todoListModel.editTodo({ id, title });
   }
 
+  handleStartEdit({ id }) {
+    this.#todoListModel.startEdit({ id });
+  }
+
 
   mount() {
     // 一致するidのDOM要素を取得する
@@ -52,6 +56,7 @@ export class App {
     this.#todoListModel.onChange(() => {
       // #TodoListModelの#items配列を取得
       const todoItems = this.#todoListModel.getTodoItems();
+      const editingId = this.#todoListModel.getEditingId();
       const todoListElement = this.#todoListView.createElement(todoItems, {
         onUpdateTodo: ({ id, completed }) => {
           this.handleUpdate({ id, completed });
@@ -61,8 +66,11 @@ export class App {
         },
         onEditTodo: ({ id, title }) => {
           this.handleEdite({ id, title });
+        },
+        onStartEdit: ({ id }) => {
+          this.handleStartEdit({ id });
         }
-      });
+      }, editingId);
       // 新しいTodoリストで既存のTodoリストを上書きする
       render(todoListElement, containerElement);
       // カウント数を更新
