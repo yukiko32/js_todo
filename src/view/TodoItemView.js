@@ -15,21 +15,23 @@ export class TodoItemView {
     // 状態により編集中・完了済み・未完了のTodoアイテムを作成
     let todoItemElement = null;
     if (todoItem.id === editingId) {
-      todoItemElement = element`<li class="row gap-2 mb-2">
-                                    <input type = "text" value="${todoItem.title}" class="edit col fs-5 form-control">
-                                    <button class="save-btn col-2 btn btn-primary">保存</button>
+      todoItemElement = element`<li class="row gap-2 py-1 mb-2 alert alert-light align-items-center">
+                                    <input type = "text" value="${todoItem.title}" class="edit col form-control form-control-sm">
+                                    <button class="save-btn col-2 btn btn-danger btn-sm">保存</button>
                                 </li>`;
     } else if (todoItem.completed) {
-      todoItemElement = element`<li class="row gap-2 mb-2"><input type="checkbox" class="checkbox col-1" checked>
-                                    <span class="title col fs-5"><s>${todoItem.title}</s></span>
-                                    <button class="edit-btn col-2 btn btn-primary">編集</button>
-                                    <button class="delete-btn col-2 btn btn-primary">削除</button>
+      todoItemElement = element`<li class="row gap-2 py-1 mb-2 alert alert-secondary align-items-center">
+                                    <input type="checkbox" class="checkbox col-1" checked>
+                                    <span class="title col"><s>${todoItem.title}</s></span>
+                                    <button class="edit-btn col-1 btn btn-dark opacity-75 btn-sm">編集</button>
+                                    <button class="delete-btn col-1 btn btn-dark btn-sm">削除</button>
                                 </li>`;
     } else {
-      todoItemElement = element`<li class="row gap-2 mb-2"><input type="checkbox" class="checkbox col-1">
-                                    <span class="title col fs-5">${todoItem.title}</span>
-                                    <button class="edit-btn col-2 btn btn-primary">編集</button>
-                                    <button class="delete-btn col-2 btn btn-primary">削除</button>
+      todoItemElement = element`<li class="row gap-2 py-1 mb-2 alert alert-light align-items-center">
+                                    <input type="checkbox" class="checkbox col-1">
+                                    <span class="title col">${todoItem.title}</span>
+                                    <button class="edit-btn col-1 btn btn-dark opacity-75 btn-sm">編集</button>
+                                    <button class="delete-btn col-1 btn btn-dark btn-sm">削除</button>
                                 </li>`;
     }
 

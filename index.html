@@ -7,37 +7,39 @@
   <title>ToDo List</title>
   <style>
     body {
-        background-color: #f8f8ff;
-        font-size: 14px;
+      background-color: #f8f8ff;
+      margin: 0;
+      padding: 0;
     }
-    </style>
+  </style>
 </head>
 <body>
-  <div class="container text-center" style="max-width: 600px;">
+  <div class="container" style="max-width: 600px;">
+    <h1 class="text-center mt-3">ToDo List</h1>
     <!-- Todoアイテム数の表示 -->
-    <header class="row my-2 gap-3">
-      <span id="js-todo-count" class="col-sm py-1 alert alert-light">全てのタスク: 0</span>
-      <span id="js-completed-count" class="col-sm py-1 alert alert-light">完了済み: 0</span>
-      <span id="js-incompleted-count" class="col-sm py-1 alert alert-light">未完了: 0</span>
+    <header class="row mt-4 mb-2 text-center">
+      <span id="js-todo-count" class="col-sm py-1 mx-1 alert alert-light fs-6">全てのタスク: 0</span>
+      <span id="js-completed-count" class="col-sm py-1 mx-1 alert alert-light fs-6">完了済み: 0</span>
+      <span id="js-incompleted-count" class="col-sm py-1 mx-1 alert alert-light fs-6">未完了: 0</span>
     </header>
 
-    
+    <!-- Todoアイテムの入力 -->
     <form id="js-form" class="mb-3 row">
       <input
         id="js-form-input"
         type="text"
         placeholder="タスクを追加"
         autocomplete="off"
-        class="col-sm me-2 mb-2 form-control form-control-lg"
+        class="col-sm me-3 mb-2 form-control form-control"
       />
-      <input type="submit" class="col-sm-2 mb-2 btn btn-primary" value="保存">
+      <input type="submit" class="col-sm-2 mb-2 btn btn-danger" value="保存">
     </form>
     
-
     <!-- TodoアプリのメインとなるTodoリスト -->
-    <div id="js-todo-list"><!-- Todoリストの表示 --></div>
+    <div id="js-todo-list" class="mx-auto">
+      <!-- Todoリストの表示 -->
+    </div>
   </div>
-
 
   <script src="./index.js" type="module"></script>
 </body>
