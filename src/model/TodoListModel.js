@@ -95,23 +95,23 @@ export class TodoListModel extends EventEmitter {
    * @param {{ id: number }}
    */
   deleteTodo({ id }) {
-    // `id`に一致しないTodoItemだけを残すことで、`id`に一致するTodoItemを削除する
     // `id`に一致しないTodoItemを残してthis.#itemsを上書きする
     this.#items = this.#items.filter(todo => {
       return todo.id !== id;
     });
-    window.confirm("本当に削除してもよろしいですか？") && this.emitChange();
+    this.emitChange();
   }
 
 
-  editTodo({ id }) {
+  editTodo({ id, title }) {
     const todoItem = this.#items.find(todo => todo.id === id);
     if (!todoItem) {
       return;
     }
-
-
+    todoItem.title = title;  // タイトルを更新する
+    this.emitChange();
   }
+
 }
 
 

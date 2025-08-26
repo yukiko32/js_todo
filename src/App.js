@@ -34,6 +34,11 @@ export class App {
     this.#todoListModel.deleteTodo({ id });
   }
 
+  handleEdite({ id, title }) {
+    this.#todoListModel.editTodo({ id, title });
+  }
+
+
   mount() {
     // 一致するidのDOM要素を取得する
     const formElement = document.querySelector("#js-form");
@@ -47,13 +52,15 @@ export class App {
     this.#todoListModel.onChange(() => {
       // #TodoListModelの#items配列を取得
       const todoItems = this.#todoListModel.getTodoItems();
-      // #items配列と、onUpdateTodoとonDeleteTodoのオブジェクトを渡してcreateElementを呼び出し、Todoリストの一覧を格納
       const todoListElement = this.#todoListView.createElement(todoItems, {
         onUpdateTodo: ({ id, completed }) => {
           this.handleUpdate({ id, completed });
         },
         onDeleteTodo: ({ id }) => {
           this.handleDelete({ id });
+        },
+        onEditTodo: ({ id, title }) => {
+          this.handleEdite({ id, title });
         }
       });
       // 新しいTodoリストで既存のTodoリストを上書きする
@@ -67,7 +74,11 @@ export class App {
     // form送信時のイベント
     formElement.addEventListener("submit", (event) => {
       event.preventDefault();  // 本来の動作を無効化
-      this.handleAdd(inputElement.value);  // 入力内容をTodoアイテムに追加
+      // 入力内容がある場合はTodoアイテムに追加
+      const title = inputElement.value;
+      if (title) {
+        this.handleAdd(inputElement.value);
+      }
       inputElement.value = "";  // 入力欄をリセット
     });
   }
