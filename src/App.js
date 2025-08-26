@@ -4,8 +4,8 @@ import { TodoItemModel } from "./model/TodoItemModel.js";
 import { TodoListModel } from "./model/TodoListModel.js";
 
 export class App {
-  #todoListView = new TodoListView();  // #todoListViewはcreateElementを持つ
-  #todoListModel = new TodoListModel([]);  // #TodoListModelは#items配列を持つ
+  #todoListView = new TodoListView();  // #todoListViewインスタンスはcreateElementを持つ
+  #todoListModel = new TodoListModel([]);  // #TodoListModelインスタンスは#items配列を持つ
 
   /**
    * Todoを追加するときに呼ばれるリスナー関数
@@ -48,7 +48,7 @@ export class App {
     const incompletedItemCountElement = document.querySelector("#js-incompleted-count");
     const containerElement = document.querySelector("#js-todo-list");
 
-    // TodoListの状態が更新されたときに呼び出されるリスナー関数を登録する
+    // TodoListの状態が更新されたときに呼び出されるリスナー関数を登録する（emitChange()で呼ばれる）
     this.#todoListModel.onChange(() => {
       // #TodoListModelの#items配列を取得
       const todoItems = this.#todoListModel.getTodoItems();
@@ -75,11 +75,10 @@ export class App {
     formElement.addEventListener("submit", (event) => {
       event.preventDefault();  // 本来の動作を無効化
       // 入力内容がある場合はTodoアイテムに追加
-      const title = inputElement.value;
-      if (title) {
+      if (inputElement.value) {
         this.handleAdd(inputElement.value);
+        inputElement.value = "";  // 入力欄をリセット
       }
-      inputElement.value = "";  // 入力欄をリセット
     });
   }
 }

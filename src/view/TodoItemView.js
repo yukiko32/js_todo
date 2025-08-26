@@ -47,8 +47,6 @@ export class TodoItemView {
     const editButtonElement = todoItemElement.querySelector(".edit");
     editButtonElement.addEventListener("click", () => {
 
-      
-
       // 現在のタイトルを取得
       const oldTitle = todoItem.title;
 

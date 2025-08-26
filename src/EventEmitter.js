@@ -1,5 +1,5 @@
 export class EventEmitter {
-  // 登録する [イベント名, Set(リスナー関数)] を管理するMap
+  // 登録するイベントを管理するMap ([イベント名, Set(リスナー関数)], [イベント名, Set(リスナー関数)], ...)
   #listeners = new Map();
   /**
    * 指定したイベントが実行されたときに呼び出されるリスナー関数を登録する
@@ -8,7 +8,7 @@ export class EventEmitter {
    */
   addEventListener(type, listener) {
     // 指定したイベントに対応するSetを作成しリスナー関数を登録する
-    // イベント名が無ければ[イベント名, 空のSet]の配列をMapに追加する
+    // 新規のイベント名は[イベント名, 空のSet]の配列をMapに追加する
     if (!this.#listeners.has(type)) {
       this.#listeners.set(type, new Set());
     }
@@ -30,6 +30,7 @@ export class EventEmitter {
     // this(EventEmitterインスタンス)を指定してすべてのリスナーを実行する
     listenerSet.forEach(listener => {
       // thisを指定しない(listener();)と、thisが undefined(strictモード)、またはwindow/global(非strictモード)になる
+      // イベントリスナー内でthisを使ったときに、イベントを発火させたEventEmitterインスタンスを指すようにするために指定する
       listener.call(this);
     });
   }
